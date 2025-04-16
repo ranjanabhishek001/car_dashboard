@@ -1,0 +1,393 @@
+serviceWorkerRegistration.register(); serviceWorkerRegistration.unregister();
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CARS WORLD</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      .hidden {
+        display: none;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-100 font-sans">
+    <!-- HOME SCREEN -->
+    <div
+      id="home-screen"
+      class="flex flex-col items-center justify-center min-h-screen"
+    >
+      <h1 class="text-4xl font-bold mb-8 text-blue-700">
+        Welcome to CARS WORLD
+      </h1>
+      <div class="space-x-4">
+        <button
+          onclick="showLogin()"
+          class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700"
+        >
+          Login
+        </button>
+        <button
+          onclick="showSignup()"
+          class="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700"
+        >
+          Sign Up
+        </button>
+      </div>
+    </div>
+
+    <!-- LOGIN SCREEN -->
+    <div
+      id="login-screen"
+      class="hidden flex flex-col items-center justify-center min-h-screen"
+    >
+      <div class="bg-white p-6 rounded shadow-lg w-96">
+        <h2 class="text-xl font-bold mb-4 text-center">Login</h2>
+        <input
+          id="login-phone"
+          type="text"
+          placeholder="Phone Number"
+          class="w-full p-2 border rounded mb-3"
+        />
+        <input
+          id="login-password"
+          type="password"
+          placeholder="Password"
+          class="w-full p-2 border rounded mb-4"
+        />
+        <button
+          onclick="loginUser()"
+          class="bg-blue-600 w-full text-white py-2 rounded hover:bg-blue-700"
+        >
+          Login
+        </button>
+        <p class="mt-4 text-center text-sm">
+          <a href="#" class="text-blue-600" onclick="goHome()">← Back</a>
+        </p>
+      </div>
+    </div>
+
+    <!-- SIGNUP SCREEN -->
+    <div
+      id="signup-screen"
+      class="hidden flex flex-col items-center justify-center min-h-screen"
+    >
+      <div class="bg-white p-6 rounded shadow-lg w-96">
+        <h2 class="text-xl font-bold mb-4 text-center">Sign Up</h2>
+        <input
+          id="signup-phone"
+          type="text"
+          placeholder="Phone Number"
+          class="w-full p-2 border rounded mb-2"
+        />
+        <input
+          id="signup-email"
+          type="email"
+          placeholder="Email"
+          class="w-full p-2 border rounded mb-2"
+        />
+        <input
+          id="signup-username"
+          type="text"
+          placeholder="Username"
+          class="w-full p-2 border rounded mb-2"
+        />
+        <input
+          id="signup-password"
+          type="password"
+          placeholder="Password"
+          class="w-full p-2 border rounded mb-3"
+        />
+        <button
+          onclick="signupUser()"
+          class="bg-green-600 w-full text-white py-2 rounded hover:bg-green-700"
+        >
+          Sign Up
+        </button>
+        <p class="mt-4 text-center text-sm">
+          <a href="#" class="text-green-600" onclick="goHome()">← Back</a>
+        </p>
+      </div>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div id="main-dashboard" class="hidden flex flex-col h-screen">
+      <!-- Top bar -->
+      <div class="flex justify-between items-center bg-white shadow p-4">
+        <h1 class="text-3xl font-bold mx-auto text-blue-600">CARS WORLD</h1>
+        <button
+          class="absolute right-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          onclick="showProfile()"
+        >
+          Your Profile
+        </button>
+      </div>
+
+      <div class="flex flex-1">
+        <!-- Sidebar -->
+        <div class="w-1/5 bg-gray-200 p-4 space-y-4">
+          <button
+            onclick="showBuyCar()"
+            class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
+          >
+            Buy Car
+          </button>
+          <button
+            onclick="showSellCar()"
+            class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
+          >
+            Sell Car
+          </button>
+          <button
+            onclick="showCarInfo()"
+            class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
+          >
+            Car Info
+          </button>
+          <button
+            onclick="showProfile()"
+            class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
+          >
+            Profile
+          </button>
+        </div>
+
+        <!-- Main content -->
+        <div id="main-content" class="flex-1 p-6 overflow-y-auto">
+          <h2 class="text-xl font-semibold">Welcome to Cars World!</h2>
+          <p class="mt-2 text-gray-700">Dashboard contents go here.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SELL CAR FORM -->
+    <div
+      id="sell-car-form"
+      class="hidden flex flex-col items-center justify-center min-h-screen"
+    >
+      <div class="bg-white p-6 rounded shadow-lg w-96">
+        <h2 class="text-xl font-bold mb-4 text-center">Sell Your Car</h2>
+        <input
+          id="car-model"
+          type="text"
+          placeholder="Car Model"
+          class="w-full p-2 border rounded mb-2"
+        />
+        <input
+          id="car-year"
+          type="number"
+          placeholder="Year of Purchase"
+          class="w-full p-2 border rounded mb-2"
+        />
+        <input
+          id="car-price"
+          type="number"
+          placeholder="Price"
+          class="w-full p-2 border rounded mb-2"
+        />
+        <input
+          id="car-location"
+          type="text"
+          placeholder="Location"
+          class="w-full p-2 border rounded mb-2"
+        />
+        <input
+          id="car-image"
+          type="file"
+          class="w-full p-2 border rounded mb-3"
+        />
+        <button
+          onclick="sellCar()"
+          class="bg-green-600 w-full text-white py-2 rounded hover:bg-green-700"
+        >
+          Sell Car
+        </button>
+        <p class="mt-4 text-center text-sm">
+          <a href="#" class="text-green-600" onclick="goHome()">← Back</a>
+        </p>
+      </div>
+    </div>
+
+    <!-- PROFILE SCREEN -->
+    <div
+      id="profile-screen"
+      class="hidden flex flex-col items-center justify-center min-h-screen"
+    >
+      <div class="bg-white p-6 rounded shadow-lg w-96">
+        <h2 class="text-xl font-bold mb-4 text-center">Your Profile</h2>
+        <p>Profile information goes here.</p>
+        <button
+          class="bg-blue-600 text-white py-2 px-4 rounded mt-4"
+          onclick="goHome()"
+        >
+          Back
+        </button>
+      </div>
+    </div>
+
+    <!-- LOGIC SCRIPT -->
+    <script>
+      let carsForSale = [
+        {
+          model: "Toyota Fortuner",
+          year: 2020,
+          price: "₹28,00,000",
+          location: "Delhi",
+          image: "",
+        },
+        {
+          model: "Hyundai Creta",
+          year: 2019,
+          price: "₹13,50,000",
+          location: "Mumbai",
+          image: "",
+        },
+      ];
+
+      const carInfoList = [
+        {
+          model: "Honda City ZX",
+          year: 2023,
+          company: "Honda",
+          seating: "5 Seater",
+          horsepower: "121 HP",
+          torque: "145 Nm",
+        },
+        {
+          model: "Mahindra Thar",
+          year: 2022,
+          company: "Mahindra",
+          seating: "4 Seater",
+          horsepower: "130 HP",
+          torque: "300 Nm",
+        },
+        {
+          model: "Kia Seltos GTX",
+          year: 2023,
+          company: "Kia",
+          seating: "5 Seater",
+          horsepower: "160 HP",
+          torque: "253 Nm",
+        },
+      ];
+
+      function goHome() {
+        hideAll();
+        document.getElementById("home-screen").classList.remove("hidden");
+      }
+
+      function hideAll() {
+        document.getElementById("home-screen").classList.add("hidden");
+        document.getElementById("login-screen").classList.add("hidden");
+        document.getElementById("signup-screen").classList.add("hidden");
+        document.getElementById("main-dashboard").classList.add("hidden");
+        document.getElementById("sell-car-form").classList.add("hidden");
+        document.getElementById("profile-screen").classList.add("hidden");
+      }
+
+      function showLogin() {
+        hideAll();
+        document.getElementById("login-screen").classList.remove("hidden");
+      }
+
+      function showSignup() {
+        hideAll();
+        document.getElementById("signup-screen").classList.remove("hidden");
+      }
+
+      function loginUser() {
+        const phone = document.getElementById("login-phone").value;
+        const password = document.getElementById("login-password").value;
+        alert(Logged in with Phone: ${phone} and Password: ${password});
+        showDashboard();
+      }
+
+      function showDashboard() {
+        hideAll();
+        document.getElementById("main-dashboard").classList.remove("hidden");
+      }
+
+      function signupUser() {
+        const phone = document.getElementById("signup-phone").value;
+        const email = document.getElementById("signup-email").value;
+        const username = document.getElementById("signup-username").value;
+        const password = document.getElementById("signup-password").value;
+        alert(
+          Signed up with Phone: ${phone}, Email: ${email}, Username: ${username}, Password: ${password}
+        );
+        goHome();
+      }
+
+      function showBuyCar() {
+        document.getElementById("main-content").innerHTML =
+          "<h2 class='text-2xl font-bold mb-4'>Cars Available for Purchase</h2>";
+
+        carsForSale.forEach((car, index) => {
+          const carCard = `
+          <div onclick="viewCarDetails(${index})" class="cursor-pointer bg-white shadow-md rounded p-4 mb-4">
+            <h3 class="text-lg font-semibold">${car.model} (${car.year})</h3>
+            <p class="text-gray-700">Price: ${car.price}</p>
+            <p class="text-gray-700">Location: ${car.location}</p>
+          </div>
+        `;
+          document.getElementById("main-content").innerHTML += carCard;
+        });
+      }
+
+      function viewCarDetails(index) {
+        const car = carsForSale[index];
+        document.getElementById("main-content").innerHTML = `
+        <h2 class='text-2xl font-bold mb-4'>Buying: ${car.model} (${car.year})</h2>
+        <p class="text-gray-700">Price: ${car.price}</p>
+        <p class="text-gray-700">Location: ${car.location}</p>
+        <button class="bg-blue-600 text-white px-4 py-2 rounded mt-4">Buy Now</button>
+      `;
+      }
+
+      function showSellCar() {
+        hideAll();
+        document.getElementById("sell-car-form").classList.remove("hidden");
+      }
+
+      function sellCar() {
+        const model = document.getElementById("car-model").value;
+        const year = document.getElementById("car-year").value;
+        const price = document.getElementById("car-price").value;
+        const location = document.getElementById("car-location").value;
+        const image = document.getElementById("car-image").files[0];
+
+        const newCar = {
+          model,
+          year,
+          price,
+          location,
+          image: image ? URL.createObjectURL(image) : "",
+        };
+        carsForSale.push(newCar);
+        alert("Car listed successfully!");
+        showDashboard();
+      }
+
+      function showProfile() {
+        hideAll();
+        document.getElementById("profile-screen").classList.remove("hidden");
+      }
+
+      function showCarInfo() {
+        let html = <h2 class="text-2xl font-bold mb-4">Car Information</h2>;
+        carInfoList.forEach((car) => {
+          html += `
+            <div class="bg-white shadow p-4 rounded mb-4">
+              <h3 class="text-lg font-semibold">${car.company} - ${car.model} (${car.year})</h3>
+              <p class="text-gray-700">Seating Type: ${car.seating}</p>
+              <p class="text-gray-700">Horsepower: ${car.horsepower}</p>
+              <p class="text-gray-700">Torque: ${car.torque}</p>
+            </div>
+          `;
+        });
+        document.getElementById("main-content").innerHTML = html;
+      }
+    </script>
+  </body>
+</html>
